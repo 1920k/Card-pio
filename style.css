@@ -1,0 +1,124 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(120deg, #f7e9d0 0%, #e0c3fc 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #6d3b8a;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2.5em;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 8px #fff;
+}
+
+h2 {
+    color: #8a5c2c;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+p {
+    text-align: center;
+    color: #444;
+    font-size: 1.2em;
+}
+
+table {
+    margin: 30px auto;
+    border-collapse: collapse;
+    width: 80%;
+    background: #fff8f0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 16px 24px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+th {
+    background: #6d3b8a;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+tr:nth-child(even) {
+    background: #f3e6ff;
+}
+
+tr:hover {
+    background: #ffe4b5;
+    transition: background 0.3s;
+}
+
+.cart-container {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    background: #fff8f0;
+    border: 2px solid #6d3b8a;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+    padding: 18px 24px;
+    min-width: 220px;
+    z-index: 1000;
+}
+
+.cart-container h3 {
+    margin: 0 0 10px 0;
+    color: #6d3b8a;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.cart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.cart-items li {
+    padding: 6px 0;
+    border-bottom: 1px solid #e0c3fc;
+    font-size: 1em;
+    color: #444;
+}
+
+.cart-total {
+    font-weight: bold;
+    color: #8a5c2c;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.cart-empty {
+    color: #aaa;
+    text-align: center;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    table, th, td {
+        font-size: 0.9em;
+        padding: 8px 4px;
+    }
+    table {
+        width: 98%;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+    h2 {
+        font-size: 1.1em;
+    }
+}
