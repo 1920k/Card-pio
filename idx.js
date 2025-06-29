@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <ul class="cart-items"></ul>
         <div class="cart-total">Total: R$ <span id="cart-total-value">0,00</span></div>
         <div class="cart-empty">Seu carrinho está vazio.</div>
+        <button id="pay-btn" style="display:block;margin:18px auto 0 auto;background:#388e3c;color:#fff;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-size:1.1em;">Pagar com PIX</button>
+        <div id="pix-area" style="display:none;text-align:center;margin-top:12px;"></div>
     `;
     document.body.appendChild(cartContainer);
 
@@ -19,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartEmpty = cartContainer.querySelector('.cart-empty');
     const clearCartBtn = cartContainer.querySelector('#clear-cart-btn');
     const removeCartBtn = cartContainer.querySelector('#remove-cart-btn');
+    const payBtn = cartContainer.querySelector('#pay-btn');
+    const pixArea = cartContainer.querySelector('#pix-area');
 
     let cart = [];
 
@@ -54,17 +58,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (idx === 0) return; // pula o cabeçalho
         const cells = row.querySelectorAll('td');
         if (cells.length === 2) {
-            const btn = document.createElement('button');
-            btn.textContent = 'Adicionar ao carrinho';
-            btn.style.marginLeft = '10px';
-            btn.onclick = function() {
-                cart.push({
-                    name: cells[0].textContent,
-                    price: parseFloat(cells[1].textContent.replace('R$', '').replace(',', '.'))
-                });
-                updateCart();
-            };
-            cells[1].appendChild(btn);
+            // Evita adicionar múltiplos botões ao recarregar
+            if (!cells[1].querySelector('.add-cart-btn')) {
+                const btn = document.createElement('button');
+                btn.textContent = 'Adicionar ao carrinho';
+                btn.className = 'add-cart-btn';
+                btn.style.marginLeft = '10px';
+                btn.onclick = function() {
+                    // Se o carrinho estiver oculto, reexibe
+                    if (cartContainer.style.display === 'none') {
+                        cartContainer.style.display = '';
+                    }
+                    cart.push({
+                        name: cells[0].textContent,
+                        price: parseFloat(cells[1].textContent.replace('R$', '').replace(',', '.'))
+                    });
+                    updateCart();
+                };
+                cells[1].appendChild(btn);
+            }
         }
     });
 
@@ -74,7 +86,23 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     removeCartBtn.onclick = function() {
-        cartContainer.remove();
+        cartContainer.style.display = 'none';
+    };
+
+    payBtn.onclick = function() {
+        if (cart.length === 0) {
+            pixArea.style.display = 'block';
+            pixArea.innerHTML = '<span style="color:#b71c1c;">Adicione itens ao carrinho antes de pagar.</span>';
+            return;
+        }
+        // Exemplo de chave PIX fictícia
+        const chavePix = 'paroquiajesusnazare@pix.com';
+        pixArea.style.display = 'block';
+        pixArea.innerHTML = `
+            <strong>Chave PIX:</strong><br>
+            <span style="font-size:1.2em;color:#388e3c;">${chavePix}</span><br>
+            <span style="font-size:0.95em;color:#444;">(Envie o valor total do carrinho para esta chave e apresente o comprovante na secretaria.)</span>
+        `;
     };
 
     // Torna o carrinho movimentável
